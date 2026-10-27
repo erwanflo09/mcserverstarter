@@ -158,6 +158,16 @@ except:
     
 
 #---------------------------
+print("URL actual:", driver.current_url)
+print("Título:", driver.title)
+
+for button in driver.find_elements(By.TAG_NAME, "button"):
+    print(
+        "BOTÓN:",
+        repr(button.text),
+        "| CLASE:",
+        button.get_attribute("class")
+    )
 try:
     # Wait for the start button to be visible
     try:
