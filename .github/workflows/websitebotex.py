@@ -177,44 +177,38 @@ WebDriverWait(driver, 20).until(
 
 print("Servidor compartido encontrado")
 try:
-    # Wait for the start button to be visible
-    try:
-        wait = WebDriverWait(driver, 20)
-        startworld = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn-primary")))
-        print("After waiting for start:\n"+driver.current_url)
-    except:
-        try: # Check if password is incorrect or stop button is already present
-            if  ran_loginflow and driver.current_url == old_url:
-                error_elem = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.ID, "error-password")))
-                if error_elem:
-                    print("Password is incorrect")
-                    driver.quit()
-                    sys.exit()
-            else:
-                try:
-                    stopworld = WebDriverWait(driver, 5).until(
-                        EC.visibility_of_element_located((By.XPATH, "//button[contains(@class, 'btn-error')]"))
-                    )
-                    print("Stop button found — world already running.")
-                    driver.quit()
-                    sys.exit()
-                except Exception as e:
-                    print(f"Neither Start nor Stop button found. Something might be wrong: {e}")
-                    driver.quit()
-                    exit()
-        except Exception as inner_exc:
-            print(f"Unexpected error during start/stop button checks: {inner_exc}")
-            print("After waiting for start/stop:\n"+driver.current_url)
-            driver.quit()
-            sys.exit()
-    # Now ensure it’s clickable
-    driver.execute_script("arguments[0].scrollIntoView(true);", startworld)
+
+# Buscar el botón Start World en la pestaña Shared With You
+try:
+    startworld = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                "//button[.//span[normalize-space()='Start World']]"
+            )
+        )
+    )
+
+    print("Botón Start World encontrado")
+
+    # Hacer clic en el botón para iniciar el servidor
+    driver.execute_script(
+        "arguments[0].scrollIntoView({block: 'center'});",
+        startworld
+    )
+
     driver.execute_script("arguments[0].click();", startworld)
-    print("Clicked start")
-    time.sleep(2)
+
+    print("Se hizo clic en Start World")
+
+    # Esperar un poco para que SeedLoaf procese el inicio
+    time.sleep(5)
 
 except Exception as e:
-    print(f"Error occurred(start): {e}")
+    print(f"Error al buscar o pulsar Start World: {e}")
+
+finally:
+    driver.quit()
 
 
 
