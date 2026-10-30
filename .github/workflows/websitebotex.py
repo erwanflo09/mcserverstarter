@@ -157,17 +157,25 @@ except:
         f.write("session valid")
     
 
-#---------------------------
-print("URL actual:", driver.current_url)
-print("Título:", driver.title)
-
-for button in driver.find_elements(By.TAG_NAME, "button"):
-    print(
-        "BOTÓN:",
-        repr(button.text),
-        "| CLASE:",
-        button.get_attribute("class")
+# Abrir la pestaña de servidores compartidos
+shared_tab = WebDriverWait(driver, 20).until(
+    EC.element_to_be_clickable(
+        (By.XPATH, "//*[normalize-space()='Shared With You']")
     )
+)
+
+driver.execute_script("arguments[0].click();", shared_tab)
+
+print("Se abrió Shared With You")
+
+# Esperar a que aparezca el servidor compartido
+WebDriverWait(driver, 20).until(
+    EC.presence_of_element_located(
+        (By.XPATH, "//*[contains(text(), 'TuAbuelaX: nose edition')]")
+    )
+)
+
+print("Servidor compartido encontrado")
 try:
     # Wait for the start button to be visible
     try:
