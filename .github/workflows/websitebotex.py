@@ -176,7 +176,6 @@ WebDriverWait(driver, 20).until(
 )
 
 print("Servidor compartido encontrado")
-try:
 
 # Buscar el botón Start World en la pestaña Shared With You
 try:
