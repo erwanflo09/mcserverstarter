@@ -190,7 +190,6 @@ try:
 
     print("Botón Start World encontrado")
 
-    # Hacer clic en el botón para iniciar el servidor
     driver.execute_script(
         "arguments[0].scrollIntoView({block: 'center'});",
         startworld
@@ -198,33 +197,28 @@ try:
 
     driver.execute_script("arguments[0].click();", startworld)
 
-    
-print("Se hizo clic en Start World")
+    print("Se hizo clic en Start World")
 
-# Esperar a que SeedLoaf procese el inicio
-time.sleep(15)
+    time.sleep(15)
 
-print("URL después del clic:", driver.current_url)
+    print("URL después del clic:", driver.current_url)
 
-# Mostrar los botones que aparecen después de intentar iniciar
-for button in driver.find_elements(By.TAG_NAME, "button"):
-    print(
-        "BOTÓN DESPUÉS DEL CLIC:",
-        repr(button.text),
-        "| CLASE:",
-        button.get_attribute("class")
-    )
+    for button in driver.find_elements(By.TAG_NAME, "button"):
+        print(
+            "BOTÓN DESPUÉS DEL CLIC:",
+            repr(button.text),
+            "| CLASE:",
+            button.get_attribute("class")
+        )
 
-# Mostrar texto visible de la página para revisar el estado
-print("TEXTO VISIBLE DE LA PÁGINA:")
-print(driver.find_element(By.TAG_NAME, "body").text)
+    print("TEXTO VISIBLE DE LA PÁGINA:")
+    print(driver.find_element(By.TAG_NAME, "body").text)
 
 except Exception as e:
     print(f"Error al buscar o pulsar Start World: {e}")
 
 finally:
     driver.quit()
-
 
 
 #---------------------------
