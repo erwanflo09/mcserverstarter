@@ -51,6 +51,11 @@ def login():
     print("Abriendo página de inicio de sesión...")
     driver.get(LOGIN_URL)
     wait_for_page()
+    
+print("URL:", driver.current_url)
+print("TÍTULO:", driver.title)
+print("HTML DE LA PÁGINA:")
+print(driver.page_source[:5000])
 
     print("Esperando campo de usuario...")
 
