@@ -42,35 +42,36 @@ def wait_for_page():
     )
 
 
+
 def login():
     if not USERNAME or not PASSWORD:
         raise RuntimeError(
             "Faltan los secrets USERNAME o PASSWORD."
         )
 
-print("Abriendo página de inicio de sesión...")
-driver.get(LOGIN_URL)
-wait_for_page()
+    print("Abriendo página de inicio de sesión...")
+    driver.get(LOGIN_URL)
+    wait_for_page()
 
-print("URL:", driver.current_url)
-print("TÍTULO:", driver.title)
-print("HTML DE LA PÁGINA:")
-print(driver.page_source[:5000])
+    print("URL:", driver.current_url)
+    print("TÍTULO:", driver.title)
+    print("HTML DE LA PÁGINA:")
+    print(driver.page_source[:5000])
 
-print("Esperando campo de usuario...")
+    print("Esperando campo de usuario...")
 
-username = WebDriverWait(driver, 40).until(
-    EC.visibility_of_element_located(
-        (By.ID, "identifier-field")
+    username = WebDriverWait(driver, 40).until(
+        EC.visibility_of_element_located(
+            (By.ID, "identifier-field")
+        )
     )
-)
+
     username.click()
     username.clear()
     username.send_keys(USERNAME)
     username.send_keys(Keys.RETURN)
 
     print("Usuario ingresado correctamente.")
-
     print("Esperando campo de contraseña...")
 
     password = WebDriverWait(driver, 40).until(
@@ -86,12 +87,12 @@ username = WebDriverWait(driver, 40).until(
 
     print("Contraseña ingresada correctamente.")
 
-    # Esperar a que SeedLoaf complete el inicio de sesión.
     WebDriverWait(driver, 60).until(
         lambda d: "dashboard" in d.current_url.lower()
     )
 
     print("Inicio de sesión completado correctamente.")
+
 
 
 def start_server():
