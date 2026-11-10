@@ -48,23 +48,22 @@ def login():
             "Faltan los secrets USERNAME o PASSWORD."
         )
 
-    print("Abriendo página de inicio de sesión...")
-    driver.get(LOGIN_URL)
-    wait_for_page()
-    
+print("Abriendo página de inicio de sesión...")
+driver.get(LOGIN_URL)
+wait_for_page()
+
 print("URL:", driver.current_url)
 print("TÍTULO:", driver.title)
 print("HTML DE LA PÁGINA:")
 print(driver.page_source[:5000])
 
-    print("Esperando campo de usuario...")
+print("Esperando campo de usuario...")
 
-    username = WebDriverWait(driver, 40).until(
-        EC.visibility_of_element_located(
-            (By.ID, "identifier-field")
-        )
+username = WebDriverWait(driver, 40).until(
+    EC.visibility_of_element_located(
+        (By.ID, "identifier-field")
     )
-
+)
     username.click()
     username.clear()
     username.send_keys(USERNAME)
